@@ -15,34 +15,10 @@ def show(current_lst):  # Show up elements
     print('---------')
 
 
-# def check_impossible():  # Check impossible errors
-#     if abs(string.count('X') - string.count('O')) >= 2:
-#         print('Impossible')
-#         return True
-#     elif ((lst[:3].count('X') == 3 or lst[:3].count('O') == 3) and
-#           (lst[3:6].count('X') == 3 or lst[3:6].count('O') == 3)) or (
-#             (lst[:3].count('X') == 3 or lst[:3].count('O') == 3) and
-#             (lst[6:9].count('X') == 3 or lst[6:9].count('O') == 3)) or (
-#             (lst[6:9].count('X') == 3 or lst[6:9].count('O') == 3) and
-#             (lst[3:6].count('X') == 3 or lst[3:6].count('O') == 3)):
-#         print("Impossible")
-#         return True
-#     elif ((lst[::3].count('X') == 3 or lst[::3].count('O') == 3) and
-#           (lst[1::3].count('X') == 3 or lst[1::3].count('O') == 3)) or (
-#             (lst[::3].count('X') == 3 or lst[::3].count('O') == 3) and
-#             (lst[2::3].count('X') == 3 or lst[2::3].count('O') == 3)) or (
-#             (lst[2::3].count('X') == 3 or lst[2::3].count('O') == 3) and
-#             (lst[1::3].count('X') == 3 or lst[1::3].count('O') == 3)):
-#         print("Impossible")
-#         return True
-#     return False
-
-
-# def check_not_finished():
-#     if not check_winner() and lst.count(' ') != 0:
-#         print("Game not finished")
-#         return True
-#     return False
+def check_not_finished():
+    if not check_winner() and lst.count(' ') != 0:
+        return True
+    return False
 
 
 def check_winner():  # Check the winner/draw in case of no error
@@ -94,17 +70,17 @@ def check_diagonals(current_lst):
 
 '''
     The Matrix presentations:
-    (1, 3) (2, 3) (3, 3)
-    (1, 2) (2, 2) (3, 2)
-    (1, 1) (2, 1) (3, 1)
+    (1, 1) (1, 2) (1, 3)
+    (2, 1) (2, 2) (2, 3)
+    (3, 1) (3, 2) (3, 3)
 '''
 
 
 def put_value(x_val, y_val, flag):
     coordinates = {
-        (1, 3): 0, (2, 3): 1, (3, 3): 2,
-        (1, 2): 3, (2, 2): 4, (3, 2): 5,
-        (1, 1): 6, (2, 1): 7, (3, 1): 8
+        (1, 1): 0, (1, 2): 1, (1, 3): 2,
+        (2, 1): 3, (2, 2): 4, (2, 3): 5,
+        (3, 1): 6, (3, 2): 7, (3, 3): 8
     }
     coordinate = (x_val, y_val)
     if lst[coordinates[coordinate]] == ' ':
@@ -129,11 +105,15 @@ while True:
                 print("This cell is occupied! Choose another one!")
             else:
                 show(lst)
-                if not check_winner():
+                if check_not_finished():
                     iterate += 1
                     continue
-                else:
+                elif check_winner():
                     print(check_winner() + " wins")
                     break
-    except TypeError:
-        continue
+                else:
+                    print('Draw')
+                    break
+    except ValueError:
+        print("You should enter numbers!")
+
